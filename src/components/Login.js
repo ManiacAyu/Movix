@@ -1,8 +1,18 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidation } from "../utils/validate";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
+  const [errorMessage,setErrorMessage] = useState(null);
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const result = checkValidation(email.current.value, password.current.value);
+    setErrorMessage(result);
+  };
 
   const toggleSignUpForm = () => {
     setIsSignIn(!isSignIn);
@@ -28,16 +38,22 @@ const Login = () => {
 
           <input
             type="text"
+            ref={email}
             placeholder="email"
             className="p-4 my-2 w-full bg-transparent border-solid border-2 rounded-lg border-white"
           />
 
           <input
             type="text"
+            ref={password}
             placeholder="password"
             className="p-4 my-2 w-full bg-transparent border-solid border-2 rounded-lg border-white"
           />
-          <button className="p-4 my-2 bg-red-600 w-full rounded-lg">
+          <p className="text-red-600 mb-2">{errorMessage}</p>
+          <button
+            className="p-4 my-2 bg-red-600 w-full rounded-lg"
+            onClick={submitHandler}
+          >
             {isSignIn ? "Sign In" : "Sign Up"}
           </button>
           <p className="p-4 cursor-pointer" onClick={toggleSignUpForm}>
