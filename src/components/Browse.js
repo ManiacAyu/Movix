@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import Header from './Header'
 
 const Browse = () => {
   return (
-    <div>
-      
+    <div >
+      <Header/>
     </div>
   )
 }
