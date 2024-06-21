@@ -19,7 +19,7 @@ const Header = () => {
       });
   };
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubsribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
@@ -36,6 +36,7 @@ const Header = () => {
         navigate("/");
       }
     });
+    return () => unsubsribe();
   }, []);
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
@@ -43,7 +44,7 @@ const Header = () => {
 
       {user && (
         <div className="flex p-4">
-          <img className="w-12 h-12" alt="usericon" src="/userIcon.jpg" />
+          <img className="w-12 h-12" alt="usericon" src={user.photoURL} />
           <button
             onClick={signOutHandler}
             className="font-bold text-red-600 ml-2"
