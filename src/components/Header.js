@@ -13,7 +13,6 @@ const Header = () => {
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
-        navigate("/");
       })
       .catch((error) => {
         navigate("/error");
